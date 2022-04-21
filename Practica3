@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from IPython.display import display, Image
 
 fig = plt.figure(figsize=(10, 7))
-rows = 4
+rows = 6
 columns = 2
 img_path = "cat.jpg"
 img_path2="prueba.jpg"
@@ -519,6 +519,67 @@ def onclick(event):
         cid = fig.canvas.mpl_connect('button_press_event', onclick)
         plt.show()
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
+    plt.figure()
+    color = ('b','g','r')
+    for i, c in enumerate(color):
+        hist = cv2.calcHist([res], [i], None, [256], [0, 256])
+        plt.plot(hist, color = c)
+        plt.xlim([0,256])
+    plt.title("Color Histogram")
+    plt.xlabel("Color value")
+    plt.ylabel("Pixel count")
     plt.show()     
 cid = fig.canvas.mpl_connect('button_press_event', onclick)
+plt.figure()
+color = ('b','g','r')
+for i, c in enumerate(color):
+    hist = cv2.calcHist([img], [i], None, [256], [0, 256])
+    plt.plot(hist, color = c)
+    plt.xlim([0,256])
+plt.title("Histograma RGB, img 1")
+plt.xlabel("Valor del color")
+plt.ylabel("cantidad de pixeles")
+plt.figure()
+color = ('b','g','r')
+for i, c in enumerate(color):
+    hist = cv2.calcHist([img2], [i], None, [256], [0, 256])
+    plt.plot(hist, color = c)
+    plt.xlim([0,256])
+plt.title("Histograma RGB, img 2")
+plt.xlabel("Valor del color")
+plt.ylabel("cantidad de pixeles")
+plt.figure()
+R, G, B = cv2.split(img2)
+output1_R = cv2.equalizeHist(R)
+output1_G = cv2.equalizeHist(G)
+output1_B = cv2.equalizeHist(B)
+equ = cv2.merge((output1_R, output1_G, output1_B))
+plt.imshow(equ)
+plt.figure()
+R, G, B = cv2.split(img)
+output1_R = cv2.equalizeHist(R)
+output1_G = cv2.equalizeHist(G)
+output1_B = cv2.equalizeHist(B)
+equ2 = cv2.merge((output1_R, output1_G, output1_B))
+plt.imshow(equ2)
+plt.figure()
+color = ('b','g','r')
+for i, c in enumerate(color):
+    hist = cv2.calcHist([equ], [i], None, [256], [0, 256])
+    plt.plot(hist, color = c)
+    plt.xlim([0,256])
+plt.title("Histograma equalizado, img 1")
+plt.xlabel("Valor del color")
+plt.ylabel("cantidad de pixeles")
+plt.figure()
+color = ('b','g','r')
+for i, c in enumerate(color):
+    hist = cv2.calcHist([equ2], [i], None, [256], [0, 256])
+    plt.plot(hist, color = c)
+    plt.xlim([0,256])
+plt.title("Histograma equalizado, img 2")
+plt.xlabel("Valor del color")
+plt.ylabel("cantidad de pixeles")
 plt.show()
+plt.show()
+
