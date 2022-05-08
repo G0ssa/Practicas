@@ -1,12 +1,22 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+
+def dibujar(event,x,y,etiquetas,parametros): 
+    if event==cv2.EVENT_LBUTTONDOWN:
+        cv2.circle(img1,(x,y),50,(244,244,244),-1)
+    if event==cv2.EVENT_RBUTTONDOWN:
+        cv2.putText(img1,"hola mundo",(x,y),cv2.FONT_HERSHEY_TRIPLEX,1,(244,244,244), 2)
+#Cinecto imagen con la funcion        
+cv2.namedWindow(winname='ventanita')
+cv2.setMouseCallback('ventanita',dibujar)
 #Arreglo de zeros, es la base de una imagen
 img1 = np.zeros((400,400,3),np.uint8)
 
 
+while True:
+    cv2.imshow("ventanita",img1)
+    if cv2.waitKey(10) & 0xFF == 27:
+        break
 
-#Guardo la imagen
-cv2.imwrite('Imgnegra.jpg', img1)
-cv2.imshow("Imgnegra",img1)
-cv2.waitKey(0)
+cv2.destroyAllWindows()
