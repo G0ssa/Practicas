@@ -7,8 +7,14 @@ def dibujar(event,x,y,etiquetas,parametros):
     if event==cv2.EVENT_LBUTTONDOWN:
         cv2.circle(img1,(x,y),50,(244,244,244),-1)
     if event==cv2.EVENT_RBUTTONDOWN:
-        cv2.putText(img1,"hola mundo",(x,y),cv2.FONT_HERSHEY_TRIPLEX,1,(244,244,244), 2)
-#Cinecto imagen con la funcion        
+        i = 0
+        while True:
+            k = cv2.waitKey(0)
+            cv2.putText(img1,chr(k),(x+i,y),cv2.FONT_HERSHEY_TRIPLEX,1,(244,244,244), 2)
+            i+=25
+            if k == ord('|'):
+                break
+#conecto imagen con la funcion        
 cv2.namedWindow(winname='ventanita')
 cv2.setMouseCallback('ventanita',dibujar)
 #Arreglo de zeros, es la base de una imagen
@@ -23,7 +29,7 @@ while True:
         #edges = cv2.Canny(img1, 1, 0.4) 
         #edges = cv2.Canny(img1, 3, 0.3)
         x,y,w,h= cv2.selectROI(img1)
-        print(x,y,w,h)
-        cv2.imshow("ventanita recortada",img1)
+        
+        cv2.imshow("ventanita recortada",img1[y:(y+h),x:(x+w)])
 
 cv2.destroyAllWindows()
