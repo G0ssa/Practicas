@@ -1,1 +1,12 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+#Arreglo de zeros, es la base de una imagen
+img1 = np.zeros((400,400,3),np.uint8)
 
+
+
+#Guardo la imagen
+cv2.imwrite('Imgnegra.jpg', img1)
+cv2.imshow("Imgnegra",img1)
+cv2.waitKey(0)
