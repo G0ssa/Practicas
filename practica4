@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def dibujar(event,x,y,etiquetas,parametros): 
     if event==cv2.EVENT_LBUTTONDOWN:
         cv2.circle(img1,(x,y),50,(244,244,244),-1)
@@ -18,5 +19,11 @@ while True:
     cv2.imshow("ventanita",img1)
     if cv2.waitKey(10) & 0xFF == 27:
         break
+    if cv2.waitKey(33) == ord('a'):
+        #edges = cv2.Canny(img1, 1, 0.4) 
+        #edges = cv2.Canny(img1, 3, 0.3)
+        x,y,w,h= cv2.selectROI(img1)
+        print(x,y,w,h)
+        cv2.imshow("ventanita recortada",img1)
 
 cv2.destroyAllWindows()
