@@ -1,0 +1,37 @@
+import cv2
+import numpy as np
+import numpy.ma as ma
+
+cap = cv2.VideoCapture(1)
+
+while(1):
+    _, frame = cap.read()
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    
+    
+    lower_blue = np.array([100,150,0])
+    upper_blue = np.array([140,255,255])
+    
+    kernel = np.ones((10,10),np.uint8)
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    res = cv2.bitwise_and(frame,frame, mask= mask)
+    smoothed = cv2.filter2D(res,-1,kernel)
+    opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    blur = cv2.GaussianBlur(res,(15,15),0)
+
+    
+    cv2.imshow('Blur Gaussiano lineal',blur)
+    #cv2.imshow('frame',frame)
+    cv2.imshow('Azul',res)
+    cv2.imshow('Smoothed Lineal',smoothed)
+    cv2.imshow('Opening Falsos positivos eliminados morph',opening)
+    cv2.imshow('Closing Falsos negativos eliminados morph',closing)
+
+    
+    k = cv2.waitKey(5) & 0xFF
+    if k == 27:
+        break
+
+cv2.destroyAllWindows()
+cap.release()
