@@ -1,0 +1,40 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def dibujar(event,x,y,etiquetas,parametros): 
+    if event==cv2.EVENT_LBUTTONDOWN:
+        cv2.circle(img1,(x,y),50,(244,244,244),-1)
+    #if cv2.waitKey(33)== ord('r'):
+      #  cv2.rectangle(img1,(x,y),(x+10,y+10),(244,244,244),-1)
+    #if cv2.waitKey(33)== ord('l'):
+     #   cv2.line(img1,(x,y),(x+10,y+10),(244,244,244),10)
+    if event==cv2.EVENT_RBUTTONDOWN:
+        i = 0
+        while True:
+            k = cv2.waitKey(0)
+            cv2.putText(img1,chr(k),(x+i,y),cv2.FONT_HERSHEY_TRIPLEX,1,(244,244,244), 2)
+            i+=25
+            if k == ord('|'):
+                break
+#conecto imagen con la funcion        
+cv2.namedWindow(winname='ventanita')
+cv2.setMouseCallback('ventanita',dibujar)
+#Arreglo de zeros, es la base de una imagen
+img1 = np.zeros((400,400,3),np.uint8)
+
+
+while True:
+    cv2.imshow("ventanita",img1)
+    if cv2.waitKey(10) & 0xFF == 27:
+        break
+    if cv2.waitKey(33) == ord('a'):
+        #edges = cv2.Canny(img1, 1, 0.4) 
+        #edges = cv2.Canny(img1, 3, 0.3)
+        img2= cv2.imread('prueba.jpg')  
+        x,y,w,h= cv2.selectROI(img2)
+        
+        cv2.imshow("ventanita recortada",img2[y:(y+h),x:(x+w)])
+
+cv2.destroyAllWindows()
