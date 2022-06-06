@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import pytesseract
+from PIL import Image
 
 
 def dibujar(event,x,y,etiquetas,parametros): 
@@ -22,7 +24,7 @@ def dibujar(event,x,y,etiquetas,parametros):
 cv2.namedWindow(winname='ventanita')
 cv2.setMouseCallback('ventanita',dibujar)
 #Arreglo de zeros, es la base de una imagen
-img1 = np.zeros((400,400,3),np.uint8)
+img1 = cv2.imread('prueba2.jpg')
 
 
 while True:
@@ -31,10 +33,10 @@ while True:
         break
     if cv2.waitKey(33) == ord('a'):
         #edges = cv2.Canny(img1, 1, 0.4) 
-        #edges = cv2.Canny(img1, 3, 0.3)
-        img2= cv2.imread('prueba.jpg')  
-        x,y,w,h= cv2.selectROI(img2)
+        #edges = cv2.Canny(img1, 3, 0.3)  
+        x,y,w,h= cv2.selectROI(img1)
         
-        cv2.imshow("ventanita recortada",img2[y:(y+h),x:(x+w)])
+        cv2.imshow("ventanita recortada",img1[y:(y+h),x:(x+w)])
 
 cv2.destroyAllWindows()
+
