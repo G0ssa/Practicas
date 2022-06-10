@@ -1,17 +1,11 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import pytesseract
+import pytesseract as tess
 from PIL import Image
 
 
 def dibujar(event,x,y,etiquetas,parametros): 
-    if event==cv2.EVENT_LBUTTONDOWN:
-        cv2.circle(img1,(x,y),50,(244,244,244),-1)
-    #if cv2.waitKey(33)== ord('r'):
-      #  cv2.rectangle(img1,(x,y),(x+10,y+10),(244,244,244),-1)
-    #if cv2.waitKey(33)== ord('l'):
-     #   cv2.line(img1,(x,y),(x+10,y+10),(244,244,244),10)
     if event==cv2.EVENT_RBUTTONDOWN:
         i = 0
         while True:
@@ -24,7 +18,7 @@ def dibujar(event,x,y,etiquetas,parametros):
 cv2.namedWindow(winname='ventanita')
 cv2.setMouseCallback('ventanita',dibujar)
 #Arreglo de zeros, es la base de una imagen
-img1 = cv2.imread('prueba2.jpg')
+img1 = cv2.imread('prueba4.jpg')
 
 
 while True:
@@ -35,8 +29,10 @@ while True:
         #edges = cv2.Canny(img1, 1, 0.4) 
         #edges = cv2.Canny(img1, 3, 0.3)  
         x,y,w,h= cv2.selectROI(img1)
-        
         cv2.imshow("ventanita recortada",img1[y:(y+h),x:(x+w)])
-
+        tess.pytesseract.tesseract_cmd =  r'C:\Users\Asus\AppData\Local\Programs\Python\Python310\Tesseract-OCR\tesseract.exe'
+        texto=tess.image_to_string(img1[y:(y+h),x:(x+w)])
+        print(texto)
+        #cv2.imshow("ventanita recortada",texto)
 cv2.destroyAllWindows()
 
